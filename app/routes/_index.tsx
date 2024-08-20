@@ -20,7 +20,7 @@ export default function Index() {
   const actionData = useActionData();
   console.log("aD--> ", actionData);
   const loaderData = useLoaderData();
-  console.log("lD--> ", JSON.parse(loaderData));
+  console.log("lD--> ", loaderData);
   return (
     <>
       <Header />
