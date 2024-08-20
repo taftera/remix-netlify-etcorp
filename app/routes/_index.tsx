@@ -83,10 +83,11 @@ export async function action({ request }: { request: Request }) {
     );
     return json(subscriptionResult);
   } catch (error: any) {
-    return json(
-      { error: error.message || "An error occurred" },
-      { status: 500 }
-    );
+    // return json(
+    //   { error: error.message || "An error occurred" },
+    //   { status: 500 }
+    // );
+    return null;
   }
   return null;
 }
