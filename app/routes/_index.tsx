@@ -56,9 +56,12 @@ export function loader({ request }: { request: Request }) {
 }
 
 */
+type SubscribeData = {
+  [key: string]: FormDataEntryValue;
+};
 export async function action({ request }: { request: Request }) {
   const formData = await request.formData();
-  const subscribeData = Object.fromEntries(formData);
+  const subscribeData = Object.fromEntries(formData) as SubscribeData;
 
   // console.log('subscribeData: ', subscribeData);
   // Validate user input
@@ -66,14 +69,18 @@ export async function action({ request }: { request: Request }) {
     validateSubscription(subscribeData);
   } catch (validationErrors) {
     // console.log('subscribe faction:ve: ', validationErrors);
-    return json(validationErrors);
+    return json(validationErrors, { status: 400 });
   }
   // console.log('data validation complete, subscribing...');
   // If successful, handle subscription logic here
   try {
-    return await subscribe(subscribeData);
+    const subscriptionResult = await subscribe(subscribeData);
+    return json(subscriptionResult);
   } catch (error: any) {
-    return json(error);
+    return json(
+      { error: error.message || "An error occurred" },
+      { status: 500 }
+    );
   }
   return null;
 }
