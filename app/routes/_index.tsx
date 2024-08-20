@@ -54,7 +54,7 @@ export default function Index() {
 const sessionStorage = createCookieSessionStorage({
   cookie: {
     secure: true, // Defaults to true in production
-    secrets: [process.env.SESSION_SECRET],
+    secrets: ["supersecret"],
     sameSite: "lax",
     maxAge: 60 * 60 * 24, // 24 hours
     httpOnly: true,
