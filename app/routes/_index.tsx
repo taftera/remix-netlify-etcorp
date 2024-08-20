@@ -17,7 +17,7 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Index() {
-  const actionData = useActionData();
+  // const actionData = useActionData();
   return (
     <>
       <Header />
@@ -42,14 +42,14 @@ export default function Index() {
               <span className="text-base">(*required fields)</span>
             </h4>
           </div>
-          <SubscribeForm actionData={actionData} />
+          <SubscribeForm actionData={null} />
         </div>
       </div>
       <Footer />
     </>
   );
 }
-
+/*
 export function loader({ request }: { request: Request }) {
   // Creck for valid session cookie.
   return getUserFromSession(request);
@@ -76,28 +76,4 @@ export async function action({ request }: { request: Request }) {
   }
   return null;
 }
-
-/*
-start assessment button here
-http://localhost:5173/auth?mode=signup 
-
-
-start assessment
-
-first name / last name / company or group /  email
-check for email if repeated to talk to nicole
-
-updated copy for instructions
-
-after taking assessment dont share result await for meeting.
-
-instead of alert have a modal
-
-after taking the test arrive to final congratulations.
-instructions on we'll see you in training.
-
-communication alchemy
-
-get admin going
-
 */
