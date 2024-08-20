@@ -1,26 +1,26 @@
-import { Form, Link, useLoaderData } from '@remix-run/react';
-import type { MetaFunction } from '@remix-run/node';
-import { json } from '@remix-run/node';
-import { useState } from 'react';
-import { requireUserSession } from '~/data/auth.server';
-import AssessmentForm from '~/components/assessment/assessment-form';
+import { Form, Link, useLoaderData } from "@remix-run/react";
+import type { MetaFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
+import { useState } from "react";
+import { requireUserSession } from "~/data/auth.server";
+import AssessmentForm from "~/components/assessment/assessment-form";
 import {
   characteristicsA,
   characteristicsB,
-} from '~/components/assessment/characteristics';
-import { addAssessment } from '~/data/assessment.server';
-import { getUserAssessment } from '~/data/assessment.server';
+} from "~/components/assessment/characteristics";
+import { addAssessment } from "~/data/assessment.server";
+import { getUserAssessment } from "~/data/assessment.server";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: 'Empowerment Technology Corp | Assessment Tool' },
-    { name: 'description', content: 'Assessment Tool' },
+    { title: "Empowerment Technology Corp | Assessment Tool" },
+    { name: "description", content: "Assessment Tool" },
   ];
 };
 
 export default function AssesmentTest() {
   const data: any = useLoaderData();
-  const [currentStep, setCurrentStep] = useState('A');
+  const [currentStep, setCurrentStep] = useState("A");
   const [resultsA, setResultsA] = useState({});
   const [resultsB, setResultsB] = useState({});
 
@@ -41,36 +41,36 @@ export default function AssesmentTest() {
   };
 
   const handleNextStep = () => {
-    if (currentStep === 'A') {
+    if (currentStep === "A") {
       if (Object.keys(resultsA).length === characteristicsA.length) {
-        setCurrentStep('B');
+        setCurrentStep("B");
       } else {
-        alert('Please complete all assessments in Characteristics A.');
+        alert("Please complete all assessments in Characteristics A.");
       }
-    } else if (currentStep === 'B') {
+    } else if (currentStep === "B") {
       if (Object.keys(resultsB).length === characteristicsB.length) {
         const totalA: any = sumValues(resultsA);
         const totalB: any = sumValues(resultsB);
-        console.log('--- --- --- --- --- | --- --- --- --- ---');
-        console.log('Results for Characteristics A:', resultsA);
-        console.log('Sum of Characteristics A values:', totalA);
-        console.log('Results for Characteristics B:', resultsB);
-        console.log('Sum of Characteristics B values:', totalB);
-        console.log('--- --- --- --- --- | --- --- --- --- ---');
-        document.getElementById('assessment-form').submit();
+        // console.log('--- --- --- --- --- | --- --- --- --- ---');
+        // console.log('Results for Characteristics A:', resultsA);
+        // console.log('Sum of Characteristics A values:', totalA);
+        // console.log('Results for Characteristics B:', resultsB);
+        // console.log('Sum of Characteristics B values:', totalB);
+        // console.log('--- --- --- --- --- | --- --- --- --- ---');
+        document.getElementById("assessment-form").submit();
       } else {
-        alert('Please complete all assessments in Characteristics B.');
+        alert("Please complete all assessments in Characteristics B.");
       }
     }
   };
 
-  console.log('rA:', resultsA);
-  console.log('rB:', resultsB);
+  // console.log("rA:", resultsA);
+  // console.log("rB:", resultsB);
   // console.log('assessmentTest data: ', data, data.assessment);
 
   return (
     <>
-      {data.assessment == 'completed' ? (
+      {data.assessment == "completed" ? (
         <div
           id="alert"
           className="p-4 bg-red-700 text-white rounded-xl text-center"
@@ -88,8 +88,8 @@ export default function AssesmentTest() {
                 Communication Alchemy
               </h3>
               <h4 className="text-xl mb-2">
-                CHARACTERISTICS GROUP {currentStep === 'A' && 'A'}
-                {currentStep === 'B' && 'B'}
+                CHARACTERISTICS GROUP {currentStep === "A" && "A"}
+                {currentStep === "B" && "B"}
               </h4>
             </div>
             <section className={`bg-secondary p-4 text-primary`}>
@@ -102,7 +102,7 @@ export default function AssesmentTest() {
                 </div>
               </div>
               <Form method="post" id="assessment-form">
-                {currentStep === 'A' && (
+                {currentStep === "A" && (
                   <>
                     <AssessmentForm
                       data={characteristicsA}
@@ -115,7 +115,7 @@ export default function AssesmentTest() {
                     />
                   </>
                 )}
-                {currentStep === 'B' && (
+                {currentStep === "B" && (
                   <>
                     <AssessmentForm
                       data={characteristicsB}
@@ -154,9 +154,9 @@ export default function AssesmentTest() {
                     type="button"
                     onClick={handleNextStep}
                   >
-                    {currentStep === 'A'
-                      ? 'Next to Characteristics B'
-                      : 'Submit'}
+                    {currentStep === "A"
+                      ? "Next to Characteristics B"
+                      : "Submit"}
                   </button>
                 </div>
               </Form>
@@ -171,11 +171,11 @@ export default function AssesmentTest() {
 export async function loader({ request }: { request: Request }) {
   // protecting routes with a loader function
   const userId = await requireUserSession(request);
-  console.log('loader requireUserSession: ', userId);
+  // console.log("loader requireUserSession: ", userId);
   const assessment = await getUserAssessment(userId);
   if (assessment) {
-    console.log('has already completed');
-    return json({ assessment: 'completed' });
+    // console.log("has already completed");
+    return json({ assessment: "completed" });
   }
   return json(userId);
 }
@@ -184,10 +184,10 @@ export async function action({ request }: { request: Request }) {
   const userId = await requireUserSession(request);
 
   const formData = await request.formData();
-  const resultsA = formData.get('resultsA');
-  const resultsB = formData.get('resultsB');
-  const totalA = formData.get('totalsA');
-  const totalB = formData.get('totalsB');
+  const resultsA = formData.get("resultsA");
+  const resultsB = formData.get("resultsB");
+  const totalA = formData.get("totalsA");
+  const totalB = formData.get("totalsB");
 
   // console.log('--> action: Results of A:', resultsA);
   // console.log('--> action: Results of B:', resultsB);

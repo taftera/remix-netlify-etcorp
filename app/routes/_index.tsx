@@ -1,18 +1,18 @@
-import type { MetaFunction } from '@remix-run/node';
-import { Link } from '@remix-run/react';
-import { getUserFromSession } from '~/data/auth.server';
-import Header from '~/components/navigation/header';
-import Footer from '~/components/navigation/footer';
-import { json } from '@remix-run/node';
-import { useActionData } from '@remix-run/react';
-import SubscribeForm from '~/components/subscribe/SubscribeForm';
-import { validateSubscription } from '~/data/validation.server';
-import { subscribe } from '~/data/auth.server';
+import type { MetaFunction } from "@remix-run/node";
+import { Link } from "@remix-run/react";
+import { getUserFromSession } from "~/data/auth.server";
+import Header from "~/components/navigation/header";
+import Footer from "~/components/navigation/footer";
+import { json } from "@remix-run/node";
+import { useActionData } from "@remix-run/react";
+import SubscribeForm from "~/components/subscribe/SubscribeForm";
+import { validateSubscription } from "~/data/validation.server";
+import { subscribe } from "~/data/auth.server";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: 'Empowerment Technology Corp | Assessment Tool' },
-    { name: 'description', content: 'Assessment Tool' },
+    { title: "Empowerment Technology Corp | Assessment Tool" },
+    { name: "description", content: "Assessment Tool" },
   ];
 };
 
@@ -38,7 +38,7 @@ export default function Index() {
           </div>
           <div className="mb-4 text-primary">
             <h4 className="text-xl mb-8">
-              Activate Your Assessment{' '}
+              Activate Your Assessment{" "}
               <span className="text-base">(*required fields)</span>
             </h4>
           </div>
@@ -59,15 +59,15 @@ export async function action({ request }: { request: Request }) {
   const formData = await request.formData();
   const subscribeData = Object.fromEntries(formData);
 
-  console.log('subscribeData: ', subscribeData);
+  // console.log('subscribeData: ', subscribeData);
   // Validate user input
   try {
     validateSubscription(subscribeData);
   } catch (validationErrors) {
-    console.log('subscribe faction:ve: ', validationErrors);
+    // console.log('subscribe faction:ve: ', validationErrors);
     return json(validationErrors);
   }
-  console.log('data validation complete, subscribing...');
+  // console.log('data validation complete, subscribing...');
   // If successful, handle subscription logic here
   try {
     return await subscribe(subscribeData);
