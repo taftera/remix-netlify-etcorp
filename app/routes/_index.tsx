@@ -75,13 +75,18 @@ export async function action({ request }: { request: Request }) {
   // If successful, handle subscription logic here
 
   try {
-    const subscriptionResult = await subscribe(subscribeData.email, subscribeData.first_name, subscribeData.last_name, subscribeData.company);
+    const subscriptionResult = await subscribe(
+      subscribeData.email,
+      subscribeData.first_name,
+      subscribeData.last_name,
+      subscribeData.company
+    );
     return json(subscriptionResult);
   } catch (error: any) {
     return json(
       { error: error.message || "An error occurred" },
       { status: 500 }
     );
-  }*/
+  }
   return null;
 }
