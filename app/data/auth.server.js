@@ -16,7 +16,7 @@ const sessionStorage = createCookieSessionStorage({
 });
 
 async function createUserSession(userId, redirectPath) {
-  console.log("createUserSession: ", userId, redirectPath);
+  // console.log("createUserSession: ", userId, redirectPath);
   const session = await sessionStorage.getSession();
   session.set("userId", userId);
   return redirect(redirectPath, {
@@ -51,7 +51,7 @@ export async function subscribe({ email, first_name, last_name, company }) {
 }
 
 export async function signup({ email, password }) {
-  console.log("auth.server signup: ", email, password);
+  // console.log("auth.server signup: ", email, password);
   const existingUser = await prisma.user.findFirst({ where: { email } });
   if (existingUser) {
     const error = new Error(
@@ -60,7 +60,7 @@ export async function signup({ email, password }) {
     error.status = 422;
     throw error;
   }
-  console.log("existingUser: ", existingUser);
+  // console.log("existingUser: ", existingUser);
   // TODO:
   // const { hash } = bcryptjs;
   // const passwordHash = await hash(password, 12);
@@ -81,7 +81,7 @@ export async function signup({ email, password }) {
 }
 
 export async function login({ email, password }) {
-  console.log("auth.server login: ", email, password);
+  // console.log("auth.server login: ", email, password);
   const existingUser = await prisma.user.findFirst({ where: { email } });
   if (!existingUser) {
     const error = new Error(
@@ -90,7 +90,7 @@ export async function login({ email, password }) {
     error.status = 401;
     throw error;
   }
-  console.log("eu: ", existingUser);
+  // console.log("eu: ", existingUser);
 
   // TODO:
   // const { compare } = bcryptjs;
@@ -101,7 +101,7 @@ export async function login({ email, password }) {
   const passwordMatch = await argon2.verify(existingUser.password, password);
   // const passwordMatch = existingUser.password === passwordHash;
   // console.log("argon2:hp: ", hashedPassword);
-  console.log("passwordMatch: ", passwordMatch);
+  // console.log("passwordMatch: ", passwordMatch);
 
   if (!passwordMatch) {
     const error = new Error(
@@ -110,18 +110,18 @@ export async function login({ email, password }) {
     error.status = 401;
     throw error;
   }
-  console.log("existingUser: ", existingUser);
+  // console.log("existingUser: ", existingUser);
   return createUserSession(existingUser.id, "/admin/dataReview");
 }
 
 export async function getUserFromSession(request) {
-  console.log("getUserFromSession: ");
+  // console.log("getUserFromSession: ");
   const session = await sessionStorage.getSession(
     request.headers.get("Cookie")
   );
   // console.log('session: ', session);
   const userId = session.get("userId");
-  console.log("userId: ", userId);
+  // console.log("userId: ", userId);
   if (!userId) return null;
   return userId;
 }
@@ -149,9 +149,9 @@ export async function assessmentCompleted(request) {
 }
 
 export async function requireUserSession(request) {
-  console.log("requireUserSession: ");
+  // console.log("requireUserSession: ");
   const userId = await getUserFromSession(request);
-  console.log("userId: ", userId);
+  // console.log("userId: ", userId);
   if (!userId) {
     throw redirect("/subscribe");
   }
@@ -159,9 +159,9 @@ export async function requireUserSession(request) {
 }
 
 export async function requireAdminSession(request) {
-  console.log("requireUserSession: ");
+  // console.log("requireUserSession: ");
   const userId = await getUserFromSession(request);
-  console.log("userId: ", userId);
+  // console.log("userId: ", userId);
   if (!userId) {
     throw redirect("/auth?mode=login");
   }
@@ -170,9 +170,9 @@ export async function requireAdminSession(request) {
 
 export async function adminProfileReview(userId) {
   const profileData = await prisma.user.findFirst({ where: { id: userId } });
-  console.log("aPR: ", profileData.admin);
+  // console.log("aPR: ", profileData.admin);
   if (!profileData.admin) {
-    console.log("Current credentials, doesn't have access to this page.");
+    // console.log("Current credentials, doesn't have access to this page.");
     throw redirect("/auth?mode=login");
   }
   return profileData.admin;

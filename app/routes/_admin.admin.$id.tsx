@@ -1,24 +1,24 @@
-import { useParams } from '@remix-run/react';
-import type { MetaFunction } from '@remix-run/node';
-import { json } from '@remix-run/node';
-import { useMemo } from 'react';
-import { useLoaderData } from '@remix-run/react';
-import { getAssessment } from '~/data/assessment.server';
+import { useParams } from "@remix-run/react";
+import type { MetaFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
+import { useMemo } from "react";
+import { useLoaderData } from "@remix-run/react";
+import { getAssessment } from "~/data/assessment.server";
 import {
   determineQuadrantAndSubQuadrant,
   quadrantSwitch,
-} from '~/components/assessment/quadrant';
-import { Link } from '@remix-run/react';
-import { FaArrowRight } from 'react-icons/fa';
+} from "~/components/assessment/quadrant";
+import { Link } from "@remix-run/react";
+import { FaArrowRight } from "react-icons/fa";
 import {
   characteristicsA,
   characteristicsB,
-} from '~/components/assessment/characteristics';
+} from "~/components/assessment/characteristics";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: 'Empowerment Technology Corp | Assessment Tool' },
-    { name: 'description', content: 'Assessment Tool' },
+    { title: "Empowerment Technology Corp | Assessment Tool" },
+    { name: "description", content: "Assessment Tool" },
   ];
 };
 export default function ReviewId() {
@@ -86,35 +86,35 @@ export default function ReviewId() {
             <div className="flex flex-col md:flex-row w-5/6 mx-auto">
               <div id="data" className="flex flex-col flex-1 mb-8">
                 <div>
-                  <span className="font-bold mr-2">Email:</span>{' '}
+                  <span className="font-bold mr-2">Email:</span>{" "}
                   <span>{result.User.email}</span>
                 </div>
                 <div>
-                  <span className="font-bold mr-2">First name:</span>{' '}
+                  <span className="font-bold mr-2">First name:</span>{" "}
                   <span>{result.User.first_name}</span>
                 </div>
                 <div>
-                  <span className="font-bold mr-2">Last name:</span>{' '}
+                  <span className="font-bold mr-2">Last name:</span>{" "}
                   <span>{result.User.last_name}</span>
                 </div>
                 <div>
-                  <span className="font-bold mr-2">Company:</span>{' '}
+                  <span className="font-bold mr-2">Company:</span>{" "}
                   <span>{result.User.company}</span>
                 </div>
                 <div>
-                  <span className="font-bold mr-2">X:</span>{' '}
+                  <span className="font-bold mr-2">X:</span>{" "}
                   <span>{result.listA}</span>
                 </div>
                 <div>
-                  <span className="font-bold mr-2">Y:</span>{' '}
+                  <span className="font-bold mr-2">Y:</span>{" "}
                   <span>{result.listB}</span>
                 </div>
                 <div>
-                  <span className="font-bold mr-2">Main Element:</span>{' '}
+                  <span className="font-bold mr-2">Main Element:</span>{" "}
                   <span>{quadrantSwitch(elementQuadrant)}</span>
                 </div>
                 <div>
-                  <span className="font-bold mr-2">Secondary Element:</span>{' '}
+                  <span className="font-bold mr-2">Secondary Element:</span>{" "}
                   <span>{quadrantSwitch(elementSubquadrant)}</span>
                 </div>
               </div>
@@ -186,7 +186,7 @@ export async function loader({
   params: { id: string };
   request: Request;
 }) {
-  console.log('id: ', params.id);
+  // console.log('id: ', params.id);
   const { id } = params;
   const assessment = await getAssessment(id);
   // console.log('getUserAssessment:id: ', assessment);

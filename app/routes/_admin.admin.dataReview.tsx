@@ -1,18 +1,18 @@
-import type { MetaFunction } from '@remix-run/node';
+import type { MetaFunction } from "@remix-run/node";
 import {
   requireUserSession,
   adminProfileReview,
   queryAssessments,
-} from '~/data/auth.server';
-import { json } from '@remix-run/node';
-import { useLoaderData } from '@remix-run/react';
-import { useMemo } from 'react';
-import ReviewBlock from '~/components/reviews/review-block';
+} from "~/data/auth.server";
+import { json } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
+import { useMemo } from "react";
+import ReviewBlock from "~/components/reviews/review-block";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: 'Empowerment Technology Corp | Assessment Tool' },
-    { name: 'description', content: 'Assessment Tool' },
+    { title: "Empowerment Technology Corp | Assessment Tool" },
+    { name: "description", content: "Assessment Tool" },
   ];
 };
 
@@ -62,9 +62,9 @@ export default function DataReview() {
 export async function loader({ request }: { request: Request }) {
   // protecting routes with a loader function
   const userId = await requireUserSession(request);
-  console.log('DR loader requireUserSession: ', userId);
+  // console.log('DR loader requireUserSession: ', userId);
   const enabledProfile = await adminProfileReview(userId);
-  console.log('DR loader adminProfileReview: ', enabledProfile);
+  // console.log('DR loader adminProfileReview: ', enabledProfile);
   if (enabledProfile) {
     const assessments = await queryAssessments();
     return json(assessments);

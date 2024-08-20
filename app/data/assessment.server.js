@@ -1,5 +1,5 @@
-import { prisma } from './database.server';
-import { redirect } from '@remix-run/react';
+import { prisma } from "./database.server";
+import { redirect } from "@remix-run/react";
 
 export async function addAssessment(
   resultsA,
@@ -8,17 +8,17 @@ export async function addAssessment(
   totalsB,
   userId
 ) {
-  console.log('--> addAssessment:r: ', resultsA, resultsB);
-  console.log('--> addAssessment:t: ', totalsA, totalsB);
-  console.log('--> addAssessment:id: ', userId);
+  // console.log('--> addAssessment:r: ', resultsA, resultsB);
+  // console.log('--> addAssessment:t: ', totalsA, totalsB);
+  // console.log('--> addAssessment:id: ', userId);
 
   // Ensure resultsA and resultsB are JSON objects
   const parsedResultsA =
-    typeof resultsA === 'string' ? JSON.parse(resultsA) : resultsA;
+    typeof resultsA === "string" ? JSON.parse(resultsA) : resultsA;
   const parsedResultsB =
-    typeof resultsB === 'string' ? JSON.parse(resultsB) : resultsB;
-  console.log('--> addAssessment:parseA: ', parsedResultsA);
-  console.log('--> addAssessment:parseB: ', parsedResultsB);
+    typeof resultsB === "string" ? JSON.parse(resultsB) : resultsB;
+  // console.log('--> addAssessment:parseA: ', parsedResultsA);
+  // console.log('--> addAssessment:parseB: ', parsedResultsB);
   // Ensure listA and listB are numbers
   const listA = parseFloat(totalsA);
   const listB = parseFloat(totalsB);
@@ -33,17 +33,17 @@ export async function addAssessment(
         User: { connect: { id: userId } },
       },
     });
-    return redirect('/assessmentEnd');
+    return redirect("/assessmentEnd");
   } catch (error) {
-    console.error('f:addAssessment: ', error);
-    throw new Error('Failed to add assessment');
+    console.error("f:addAssessment: ", error);
+    throw new Error("Failed to add assessment");
   }
 }
 
 export async function getUserAssessment(userId) {
-  console.log('--> getUserAssessment', userId);
+  // console.log('--> getUserAssessment', userId);
   if (!userId) {
-    return new Error('Invalid user id');
+    return new Error("Invalid user id");
   }
   try {
     return await prisma.assessment.findFirst({
@@ -64,9 +64,9 @@ export async function getUserAssessment(userId) {
   }
 }
 export async function getAssessment(assessmentId) {
-  console.log('--> getAssessment', assessmentId);
+  // console.log('--> getAssessment', assessmentId);
   if (!assessmentId) {
-    return new Error('Invalid assessment id');
+    return new Error("Invalid assessment id");
   }
   try {
     return await prisma.assessment.findFirst({

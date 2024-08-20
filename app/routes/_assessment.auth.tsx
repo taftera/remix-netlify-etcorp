@@ -26,20 +26,20 @@ export async function action({ request }: { request: Request }) {
   const formData = await request.formData();
   const credentials = Object.fromEntries(formData);
 
-  console.log("credentials: ", credentials);
+  // console.log("credentials: ", credentials);
   // Validate user input
   try {
     validateCredentials(credentials);
-    console.log("successfully validated credentials");
+    // console.log("successfully validated credentials");
   } catch (error) {
     return error;
   }
   try {
     if (authMode === "login") {
-      console.log("await login");
+      // console.log("await login");
       return await login(credentials);
     } else {
-      console.log("await signup");
+      // console.log("await signup");
       return await signup(credentials);
     }
   } catch (error) {
