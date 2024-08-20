@@ -17,7 +17,8 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Index() {
-  const actionData = useActionData();
+  // const actionData = useActionData();
+
   return (
     <>
       <Header />
@@ -42,7 +43,7 @@ export default function Index() {
               <span className="text-base">(*required fields)</span>
             </h4>
           </div>
-          <SubscribeForm actionData={actionData} />
+          <SubscribeForm actionData={null} />
         </div>
       </div>
       <Footer />
@@ -55,24 +56,24 @@ export default function Index() {
 //   return getUserFromSession(request);
 // }
 
-// export async function action({ request }: { request: Request }) {
-//   const formData = await request.formData();
-//   const subscribeData = Object.fromEntries(formData);
+export async function action({ request }: { request: Request }) {
+  //   const formData = await request.formData();
+  //   const subscribeData = Object.fromEntries(formData);
 
-//   console.log("subscribeData: ", subscribeData);
-//   // Validate user input
-//   try {
-//     validateSubscription(subscribeData);
-//   } catch (validationErrors) {
-//     console.log("subscribe faction:ve: ", validationErrors);
-//     return json(validationErrors);
-//   }
-//   console.log("data validation complete, subscribing...");
-//   // If successful, handle subscription logic here
-//   try {
-//     return await subscribe(subscribeData);
-//   } catch (error: any) {
-//     return json(error);
-//   }
-//   return null;
-// }
+  //   console.log("subscribeData: ", subscribeData);
+  //   // Validate user input
+  //   try {
+  //     validateSubscription(subscribeData);
+  //   } catch (validationErrors) {
+  //     console.log("subscribe faction:ve: ", validationErrors);
+  //     return json(validationErrors);
+  //   }
+  //   console.log("data validation complete, subscribing...");
+  //   // If successful, handle subscription logic here
+  //   try {
+  //     return await subscribe(subscribeData);
+  //   } catch (error: any) {
+  //     return json(error);
+  //   }
+  return null;
+}
