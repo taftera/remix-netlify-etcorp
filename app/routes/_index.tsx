@@ -8,7 +8,6 @@ import { useActionData } from "@remix-run/react";
 import SubscribeForm from "~/components/subscribe/SubscribeForm";
 import { validateSubscription } from "~/data/validation.server";
 import { subscribe } from "~/data/auth.server";
-import { createCookieSessionStorage, redirect } from "@remix-run/node";
 
 export const meta: MetaFunction = () => {
   return [
@@ -51,27 +50,10 @@ export default function Index() {
   );
 }
 
-const sessionStorage = createCookieSessionStorage({
-  cookie: {
-    secure: true, // Defaults to true in production
-    secrets: ["supersecret"],
-    sameSite: "lax",
-    maxAge: 60 * 60 * 24, // 24 hours
-    httpOnly: true,
-  },
-});
-
-export async function loader({ request }: { request: Request }) {
+export function loader({ request }: { request: Request }) {
   // Creck for valid session cookie.
   // return getUserFromSession(request);
-  const session = await sessionStorage.getSession(
-    request.headers.get("Cookie")
-  );
-  // console.log('session: ', session);
-  const userId = session.get("userId");
-  // console.log("userId: ", userId);
-  if (!userId) return null;
-  return userId;
+  return null;
 }
 
 export async function action({ request }: { request: Request }) {
