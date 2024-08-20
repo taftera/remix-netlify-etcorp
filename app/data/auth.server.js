@@ -198,5 +198,10 @@ export async function queryAssessments() {
 export async function prismaTest(email) {
   const assessments = await prisma.user.findFirst({ where: { email } });
   console.log("prismaTest: ", assessments);
+  if (typeof assessments === "object") {
+    console.log("pt: object");
+    console.log(JSON.stringify(assessments));
+    return JSON.stringify(assessments);
+  }
   return assessments;
 }
