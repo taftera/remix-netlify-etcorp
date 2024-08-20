@@ -17,13 +17,14 @@ const sessionStorage = createCookieSessionStorage({
 
 async function createUserSession(userId, redirectPath) {
   // console.log("createUserSession: ", userId, redirectPath);
-  const session = await sessionStorage.getSession();
-  session.set("userId", userId);
-  return redirect(redirectPath, {
-    headers: {
-      "Set-Cookie": await sessionStorage.commitSession(session),
-    },
-  });
+  // const session = await sessionStorage.getSession();
+  // session.set("userId", userId);
+  // return redirect(redirectPath, {
+  //   headers: {
+  //     "Set-Cookie": await sessionStorage.commitSession(session),
+  //   },
+  // });
+  return null;
 }
 
 export async function subscribe(email, first_name, last_name, company) {
