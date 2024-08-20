@@ -115,6 +115,7 @@ export async function login({ email, password }) {
 }
 
 export async function getUserFromSession(request) {
+  /*
   // console.log("getUserFromSession: ");
   const session = await sessionStorage.getSession(
     request.headers.get("Cookie")
@@ -124,6 +125,8 @@ export async function getUserFromSession(request) {
   // console.log("userId: ", userId);
   if (!userId) return null;
   return userId;
+  */
+  return null;
 }
 
 export async function destroyUserSession(request) {
