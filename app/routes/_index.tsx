@@ -8,6 +8,7 @@ import { useActionData } from "@remix-run/react";
 import SubscribeForm from "~/components/subscribe/SubscribeForm";
 import { validateSubscription } from "~/data/validation.server";
 import { subscribe } from "~/data/auth.server";
+import { createCookieSessionStorage, redirect } from "@remix-run/node";
 
 export const meta: MetaFunction = () => {
   return [
@@ -50,29 +51,47 @@ export default function Index() {
   );
 }
 
-export function loader({ request }: { request: Request }) {
+const sessionStorage = createCookieSessionStorage({
+  cookie: {
+    secure: true, // Defaults to true in production
+    secrets: [process.env.SESSION_SECRET],
+    sameSite: "lax",
+    maxAge: 60 * 60 * 24, // 24 hours
+    httpOnly: true,
+  },
+});
+
+export async function loader({ request }: { request: Request }) {
   // Creck for valid session cookie.
-  return getUserFromSession(request);
+  // return getUserFromSession(request);
+  const session = await sessionStorage.getSession(
+    request.headers.get("Cookie")
+  );
+  // console.log('session: ', session);
+  const userId = session.get("userId");
+  // console.log("userId: ", userId);
+  if (!userId) return null;
+  return userId;
 }
 
 export async function action({ request }: { request: Request }) {
-  const formData = await request.formData();
-  const subscribeData = Object.fromEntries(formData);
+  // const formData = await request.formData();
+  // const subscribeData = Object.fromEntries(formData);
 
-  console.log("subscribeData: ", subscribeData);
-  // Validate user input
-  try {
-    validateSubscription(subscribeData);
-  } catch (validationErrors) {
-    console.log("subscribe faction:ve: ", validationErrors);
-    return json(validationErrors);
-  }
-  console.log("data validation complete, subscribing...");
-  // If successful, handle subscription logic here
-  try {
-    return await subscribe(subscribeData);
-  } catch (error: any) {
-    return json(error);
-  }
+  // console.log("subscribeData: ", subscribeData);
+  // // Validate user input
+  // try {
+  //   validateSubscription(subscribeData);
+  // } catch (validationErrors) {
+  //   console.log("subscribe faction:ve: ", validationErrors);
+  //   return json(validationErrors);
+  // }
+  // console.log("data validation complete, subscribing...");
+  // // If successful, handle subscription logic here
+  // try {
+  //   return await subscribe(subscribeData);
+  // } catch (error: any) {
+  //   return json(error);
+  // }
   return null;
 }
