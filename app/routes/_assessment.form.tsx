@@ -51,12 +51,12 @@ export default function AssesmentTest() {
       if (Object.keys(resultsB).length === characteristicsB.length) {
         const totalA: any = sumValues(resultsA);
         const totalB: any = sumValues(resultsB);
-        // console.log('--- --- --- --- --- | --- --- --- --- ---');
-        // console.log('Results for Characteristics A:', resultsA);
-        // console.log('Sum of Characteristics A values:', totalA);
-        // console.log('Results for Characteristics B:', resultsB);
-        // console.log('Sum of Characteristics B values:', totalB);
-        // console.log('--- --- --- --- --- | --- --- --- --- ---');
+        console.log("--- --- --- --- --- | --- --- --- --- ---");
+        console.log("Results for Characteristics A:", resultsA);
+        console.log("Sum of Characteristics A values:", totalA);
+        console.log("Results for Characteristics B:", resultsB);
+        console.log("Sum of Characteristics B values:", totalB);
+        console.log("--- --- --- --- --- | --- --- --- --- ---");
         document.getElementById("assessment-form").submit();
       } else {
         alert("Please complete all assessments in Characteristics B.");
@@ -64,8 +64,8 @@ export default function AssesmentTest() {
     }
   };
 
-  // console.log("rA:", resultsA);
-  // console.log("rB:", resultsB);
+  console.log("rA:", resultsA);
+  console.log("rB:", resultsB);
   // console.log('assessmentTest data: ', data, data.assessment);
 
   return (
@@ -171,10 +171,10 @@ export default function AssesmentTest() {
 export async function loader({ request }: { request: Request }) {
   // protecting routes with a loader function
   const userId = await requireUserSession(request);
-  // console.log("loader requireUserSession: ", userId);
+  console.log("loader requireUserSession: ", userId);
   const assessment = await getUserAssessment(userId);
   if (assessment) {
-    // console.log("has already completed");
+    console.log("has already completed");
     return json({ assessment: "completed" });
   }
   return json(userId);

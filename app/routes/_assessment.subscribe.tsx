@@ -45,15 +45,15 @@ export async function action({ request }: { request: Request }) {
   const formData = await request.formData();
   const subscribeData = Object.fromEntries(formData);
 
-  // console.log('subscribeData: ', subscribeData);
+  console.log("subscribeData: ", subscribeData);
   // Validate user input
   try {
     validateSubscription(subscribeData);
   } catch (validationErrors) {
-    // console.log('subscribe faction:ve: ', validationErrors);
+    console.log("subscribe faction:ve: ", validationErrors);
     return json(validationErrors);
   }
-  // console.log('data validation complete, subscribing...');
+  console.log("data validation complete, subscribing...");
   // If successful, handle subscription logic here
   try {
     return await subscribe(subscribeData);

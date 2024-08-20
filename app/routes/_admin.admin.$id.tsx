@@ -186,7 +186,7 @@ export async function loader({
   params: { id: string };
   request: Request;
 }) {
-  // console.log('id: ', params.id);
+  console.log("id: ", params.id);
   const { id } = params;
   const assessment = await getAssessment(id);
   // console.log('getUserAssessment:id: ', assessment);
