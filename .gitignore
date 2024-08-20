@@ -8,3 +8,8 @@ node_modules
 # Local Netlify folder
 .netlify
 .DS_Store
+
+/app/routes/_admin.*
+/app/routes/_assessment.*
+/app/routes/end.tsx
+/app/routes/logout.js
