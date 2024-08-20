@@ -73,6 +73,7 @@ export async function action({ request }: { request: Request }) {
   }
   // console.log('data validation complete, subscribing...');
   // If successful, handle subscription logic here
+  /*
   try {
     const subscriptionResult = await subscribe(subscribeData);
     return json(subscriptionResult);
@@ -81,6 +82,6 @@ export async function action({ request }: { request: Request }) {
       { error: error.message || "An error occurred" },
       { status: 500 }
     );
-  }
+  }*/
   return null;
 }
