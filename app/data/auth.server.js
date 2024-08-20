@@ -194,3 +194,9 @@ export async function queryAssessments() {
     throw error;
   }
 }
+
+export async function prismaTest(email) {
+  const assessments = await prisma.user.findFirst({ where: { email } });
+  console.log("prismaTest: ", assessments);
+  return assessments;
+}

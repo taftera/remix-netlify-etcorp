@@ -4,10 +4,10 @@ import { getUserFromSession } from "~/data/auth.server";
 import Header from "~/components/navigation/header";
 import Footer from "~/components/navigation/footer";
 import { json } from "@remix-run/node";
-import { useActionData } from "@remix-run/react";
+import { useActionData, useLoaderData } from "@remix-run/react";
 import SubscribeForm from "~/components/subscribe/SubscribeForm";
 import { validateSubscription } from "~/data/validation.server";
-import { subscribe } from "~/data/auth.server";
+import { subscribe, prismaTest } from "~/data/auth.server";
 
 export const meta: MetaFunction = () => {
   return [
@@ -18,6 +18,9 @@ export const meta: MetaFunction = () => {
 
 export default function Index() {
   const actionData = useActionData();
+  console.log("aD--> ", actionData);
+  const loaderData = useLoaderData();
+  console.log("lD--> ", loaderData);
   return (
     <>
       <Header />
@@ -53,6 +56,12 @@ export default function Index() {
 export function loader({ request }: { request: Request }) {
   // Creck for valid session cookie.
   // return getUserFromSession(request);
+  try {
+    const prisma_test = prismaTest("a.turati@gmail.com");
+    return prisma_test;
+  } catch (error) {
+    return error;
+  }
   return null;
 }
 
@@ -75,5 +84,6 @@ export async function action({ request }: { request: Request }) {
   // } catch (error: any) {
   //   return json(error);
   // }
+
   return null;
 }
