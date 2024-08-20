@@ -18,6 +18,7 @@ export const meta: MetaFunction = () => {
 
 export default function Index() {
   // const actionData = useActionData();
+  const actionData = {};
   return (
     <>
       <Header />
@@ -42,7 +43,7 @@ export default function Index() {
               <span className="text-base">(*required fields)</span>
             </h4>
           </div>
-          <SubscribeForm actionData={actionData} />
+          <SubscribeForm actionData={null} />
         </div>
       </div>
       <Footer />
