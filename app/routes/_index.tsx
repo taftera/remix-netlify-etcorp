@@ -20,7 +20,7 @@ export default function Index() {
   const actionData = useActionData();
   console.log("aD--> ", actionData);
   const loaderData = useLoaderData();
-  console.log("lD--> ", loaderData);
+  console.log("lD--> ", JSON.parse(loaderData));
   return (
     <>
       <Header />
@@ -56,13 +56,23 @@ export default function Index() {
 export function loader({ request }: { request: Request }) {
   // Creck for valid session cookie.
   // return getUserFromSession(request);
-  try {
-    const prisma_test = prismaTest("a.turati@gmail.com");
-    return prisma_test;
-  } catch (error) {
-    return error;
-  }
-  return null;
+  // try {
+  //   const prisma_test = prismaTest("a.turati@gmail.com");
+  //   return prisma_test;
+  // } catch (error) {
+  //   return error;
+  // }
+  const object_test = {
+    id: "66c3fe5d57d213aad889919f",
+    email: "a.turati@gmail.com",
+    password:
+      "$argon2id$v=19$m=65536,t=3,p=4$fInLWXAmJEqYviZQXDv4vw$erxpSbBnu5ZLzm+JToYAW2zWxAddq8+3cIxhqaVcUX0",
+    first_name: "Alex",
+    last_name: "Turati",
+    company: "taftera",
+    admin: true,
+  };
+  return JSON.stringify(object_test);
 }
 
 export async function action({ request }: { request: Request }) {
