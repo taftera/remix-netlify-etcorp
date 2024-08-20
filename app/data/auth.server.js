@@ -27,25 +27,25 @@ async function createUserSession(userId, redirectPath) {
 }
 
 export async function subscribe(email, first_name, last_name, company) {
-  // const existingUser = await prisma.user.findFirst({ where: { email } });
-  // if (existingUser) {
-  //   let validationErrors = {};
-  //   validationErrors.email =
-  //     "User already with the provided email already exists";
-  //   validationErrors.existingUser = true;
-  //   throw validationErrors;
-  // }
+  const existingUser = await prisma.user.findFirst({ where: { email } });
+  if (existingUser) {
+    let validationErrors = {};
+    validationErrors.email =
+      "User already with the provided email already exists";
+    validationErrors.existingUser = true;
+    throw validationErrors;
+  }
 
-  // const user = await prisma.user.create({
-  //   data: {
-  //     email: email,
-  //     password: "",
-  //     first_name: first_name,
-  //     last_name: last_name,
-  //     company: company,
-  //     admin: false,
-  //   },
-  // });
+  const user = await prisma.user.create({
+    data: {
+      email: email,
+      password: "",
+      first_name: first_name,
+      last_name: last_name,
+      company: company,
+      admin: false,
+    },
+  });
 
   // return createUserSession(user.id, "/instructions");
   return null;
