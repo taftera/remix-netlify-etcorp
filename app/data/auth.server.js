@@ -33,7 +33,7 @@ export async function subscribe(email, first_name, last_name, company) {
     validationErrors.email =
       "User already with the provided email already exists";
     validationErrors.existingUser = true;
-    throw validationErrors;
+    return validationErrors;
   }
 
   const user = await prisma.user.create({
