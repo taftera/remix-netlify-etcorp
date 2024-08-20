@@ -35,20 +35,23 @@ export async function subscribe(email, first_name, last_name, company) {
     validationErrors.existingUser = true;
     throw validationErrors;
   }
-
-  const user = await prisma.user.create({
-    data: {
-      email: email,
-      password: "",
-      first_name: first_name,
-      last_name: last_name,
-      company: company,
-      admin: false,
-    },
-  });
-
-  // return createUserSession(user.id, "/instructions");
-  return null;
+  try {
+    const user = await prisma.user.create({
+      data: {
+        email: email,
+        password: "",
+        first_name: first_name,
+        last_name: last_name,
+        company: company,
+        admin: false,
+      },
+    });
+    // return createUserSession(user.id, "/instructions");
+    return null;
+  } catch (error) {
+    console.error("Prisma error:", error);
+    throw new Error("An error occurred while creating the user");
+  }
 }
 
 export async function signup({ email, password }) {
