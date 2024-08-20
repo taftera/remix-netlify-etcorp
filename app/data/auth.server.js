@@ -46,8 +46,9 @@ export async function subscribe(email, first_name, last_name, company) {
         admin: false,
       },
     });
-    // return createUserSession(user.id, "/instructions");
-    return null;
+    console.log("test", user);
+    return createUserSession(user.id, "/instructions");
+    // return null;
   } catch (error) {
     console.error("Prisma error:", error);
     throw new Error("An error occurred while creating the user");
