@@ -27,27 +27,28 @@ async function createUserSession(userId, redirectPath) {
 }
 
 export async function subscribe(email, first_name, last_name, company) {
-  const existingUser = await prisma.user.findFirst({ where: { email } });
-  if (existingUser) {
-    let validationErrors = {};
-    validationErrors.email =
-      "User already with the provided email already exists";
-    validationErrors.existingUser = true;
-    return validationErrors;
-  }
+  // const existingUser = await prisma.user.findFirst({ where: { email } });
+  // if (existingUser) {
+  //   let validationErrors = {};
+  //   validationErrors.email =
+  //     "User already with the provided email already exists";
+  //   validationErrors.existingUser = true;
+  //   throw validationErrors;
+  // }
 
-  const user = await prisma.user.create({
-    data: {
-      email: email,
-      password: "",
-      first_name: first_name,
-      last_name: last_name,
-      company: company,
-      admin: false,
-    },
-  });
+  // const user = await prisma.user.create({
+  //   data: {
+  //     email: email,
+  //     password: "",
+  //     first_name: first_name,
+  //     last_name: last_name,
+  //     company: company,
+  //     admin: false,
+  //   },
+  // });
 
-  return createUserSession(user.id, "/instructions");
+  // return createUserSession(user.id, "/instructions");
+  return null;
 }
 
 export async function signup({ email, password }) {
@@ -58,7 +59,7 @@ export async function signup({ email, password }) {
       "User already with the provided email already exists"
     );
     error.status = 422;
-    return error;
+    throw error;
   }
   // console.log("existingUser: ", existingUser);
   // TODO:
@@ -88,7 +89,7 @@ export async function login({ email, password }) {
       "Couldn not log you in, with the provided credentials (em)"
     );
     error.status = 401;
-    return error;
+    throw error;
   }
   // console.log("eu: ", existingUser);
 
@@ -108,7 +109,7 @@ export async function login({ email, password }) {
       "Couldn not log you in, with the provided credentials (pw)"
     );
     error.status = 401;
-    return error;
+    throw error;
   }
   // console.log("existingUser: ", existingUser);
   return createUserSession(existingUser.id, "/admin/dataReview");
@@ -153,7 +154,7 @@ export async function requireUserSession(request) {
   const userId = await getUserFromSession(request);
   // console.log("userId: ", userId);
   if (!userId) {
-    return redirect("/subscribe");
+    throw redirect("/subscribe");
   }
   return userId;
 }
@@ -163,7 +164,7 @@ export async function requireAdminSession(request) {
   const userId = await getUserFromSession(request);
   // console.log("userId: ", userId);
   if (!userId) {
-    return redirect("/auth?mode=login");
+    throw redirect("/auth?mode=login");
   }
   return { userId: userId, admin: true };
 }
@@ -173,7 +174,7 @@ export async function adminProfileReview(userId) {
   // console.log("aPR: ", profileData.admin);
   if (!profileData.admin) {
     // console.log("Current credentials, doesn't have access to this page.");
-    return redirect("/auth?mode=login");
+    throw redirect("/auth?mode=login");
   }
   return profileData.admin;
 }
@@ -191,6 +192,6 @@ export async function queryAssessments() {
     return assessments;
   } catch (error) {
     console.error("Error fetching assessments:", error);
-    return error;
+    throw error;
   }
 }
