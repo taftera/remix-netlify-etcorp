@@ -47,8 +47,8 @@ export async function subscribe(email, first_name, last_name, company) {
         admin: false,
       },
     });
-    console.log("test", user);
-    return createUserSession(user.id, "/instructions");
+    // return createUserSession(user.id, "/instructions");
+    return createUserSession("1902381293812893", "/instructions");
     // return null;
   } catch (error) {
     console.error("Prisma error:", error);
