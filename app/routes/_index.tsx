@@ -17,7 +17,7 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Index() {
-  const actionData = useActionData();
+  // const actionData = useActionData();
   return (
     <>
       <Header />
@@ -49,44 +49,30 @@ export default function Index() {
     </>
   );
 }
-/*
+
 export function loader({ request }: { request: Request }) {
   // Creck for valid session cookie.
   return getUserFromSession(request);
 }
 
-*/
-type SubscribeData = {
-  [key: string]: FormDataEntryValue;
-};
-export async function action({ request }: { request: Request }) {
-  const formData = await request.formData();
-  const subscribeData = Object.fromEntries(formData) as SubscribeData;
+// export async function action({ request }: { request: Request }) {
+//   const formData = await request.formData();
+//   const subscribeData = Object.fromEntries(formData);
 
-  // console.log('subscribeData: ', subscribeData);
-  // Validate user input
-  try {
-    validateSubscription(subscribeData);
-  } catch (validationErrors) {
-    // console.log('subscribe faction:ve: ', validationErrors);
-    return json(validationErrors, { status: 400 });
-  }
-  // console.log('data validation complete, subscribing...');
-  // If successful, handle subscription logic here
-
-  try {
-    const subscriptionResult = await subscribe(
-      subscribeData.email,
-      subscribeData.first_name,
-      subscribeData.last_name,
-      subscribeData.company
-    );
-    return json(subscriptionResult);
-  } catch (error: any) {
-    return json(
-      { error: error.message || "An error occurred" },
-      { status: 500 }
-    );
-  }
-  return null;
-}
+//   // console.log('subscribeData: ', subscribeData);
+//   // Validate user input
+//   try {
+//     validateSubscription(subscribeData);
+//   } catch (validationErrors) {
+//     // console.log('subscribe faction:ve: ', validationErrors);
+//     return json(validationErrors);
+//   }
+//   // console.log('data validation complete, subscribing...');
+//   // If successful, handle subscription logic here
+//   try {
+//     return await subscribe(subscribeData);
+//   } catch (error: any) {
+//     return json(error);
+//   }
+//   return null;
+// }
