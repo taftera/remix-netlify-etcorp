@@ -16,14 +16,14 @@ const sessionStorage = createCookieSessionStorage({
 });
 
 async function createUserSession(userId, redirectPath) {
-  // console.log("createUserSession: ", userId, redirectPath);
-  // const session = await sessionStorage.getSession();
-  // session.set("userId", userId);
-  // return redirect(redirectPath, {
-  //   headers: {
-  //     "Set-Cookie": await sessionStorage.commitSession(session),
-  //   },
-  // });
+  console.log("createUserSession: ", userId, redirectPath);
+  const session = await sessionStorage.getSession();
+  session.set("userId", userId);
+  return redirect(redirectPath, {
+    headers: {
+      "Set-Cookie": await sessionStorage.commitSession(session),
+    },
+  });
   return null;
 }
 
@@ -37,16 +37,16 @@ export async function subscribe(email, first_name, last_name, company) {
     throw validationErrors;
   }
   try {
-    const user = await prisma.user.create({
-      data: {
-        email: email,
-        password: "",
-        first_name: first_name,
-        last_name: last_name,
-        company: company,
-        admin: false,
-      },
-    });
+    // const user = await prisma.user.create({
+    //   data: {
+    //     email: email,
+    //     password: "",
+    //     first_name: first_name,
+    //     last_name: last_name,
+    //     company: company,
+    //     admin: false,
+    //   },
+    // });
     // return createUserSession(user.id, "/instructions");
     return createUserSession("1902381293812893", "/instructions");
     // return null;
