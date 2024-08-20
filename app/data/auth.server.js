@@ -26,7 +26,7 @@ async function createUserSession(userId, redirectPath) {
   });
 }
 
-export async function subscribe({ email, first_name, last_name, company }) {
+export async function subscribe(email, first_name, last_name, company) {
   const existingUser = await prisma.user.findFirst({ where: { email } });
   if (existingUser) {
     let validationErrors = {};
